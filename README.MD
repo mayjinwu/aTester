@@ -12,4 +12,4 @@ I've forgotten how it felt before the world fell at our feet
 There's such a difference between us
 And a million miles
 
-## _Hello from the other side ~_
+## *Hello from the other side~*
