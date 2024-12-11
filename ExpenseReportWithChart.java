@@ -103,7 +103,7 @@ class ExpenseTracker {
 
         // 將輸入區域與表格區域加入框架
         frame.add(inputPanel, BorderLayout.NORTH);
-
+        frame.add(tableScrollPane, BorderLayout.CENTER);
         // 新增紀錄按鈕的事件處理
         addButton.addActionListener(new ActionListener() {
             @Override
