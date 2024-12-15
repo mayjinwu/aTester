@@ -28,12 +28,12 @@ public class ExpenseReportWithChart {
         }
 
         // 建立報表框架
-        JFrame reportFrame = new JFrame("財務報表");
-        reportFrame.setSize(400, 300);
+        JFrame reportFrame = new JFrame("Generate Report");
+        reportFrame.setSize(450, 350);
         reportFrame.setLayout(new BorderLayout());
 
         // 建立報表內容
-        DefaultTableModel reportTableModel = new DefaultTableModel(new String[]{"分類", "總金額", "百分比"}, 0);
+        DefaultTableModel reportTableModel = new DefaultTableModel(new String[]{"Date","Category", "Total Amount", "Percentage in Total Expense"}, 0);
         for (String category : categoryTotals.keySet()) {
             double total = categoryTotals.get(category);
             double percentage = (total / totalExpense) * 100;
@@ -77,22 +77,22 @@ class ExpenseTracker {
         inputPanel.add(timeLabel);
         inputPanel.add(timeField);
 
-        // 分類選擇
+        // Category Choice
         JLabel categoryLabel = new JLabel("Category:");
-        String[] categories = {"食物", "衣服", "娛樂"};
+        String[] categories = {"Clothes", "Food", "Entertainment"};
         JComboBox<String> categoryComboBox = new JComboBox<>(categories);
         inputPanel.add(categoryLabel);
         inputPanel.add(categoryComboBox);
 
-        // 金額輸入
-        JLabel amountLabel = new JLabel("金額:");
+        // Input Amount
+        JLabel amountLabel = new JLabel("Expense:");
         JTextField amountField = new JTextField();
         inputPanel.add(amountLabel);
         inputPanel.add(amountField);
 
         // 按鈕區域
-        JButton addButton = new JButton("新增紀錄");
-        JButton reportButton = new JButton("生成報表");
+        JButton addButton = new JButton("Add Record");
+        JButton reportButton = new JButton("Generate Report");
         inputPanel.add(addButton);
         inputPanel.add(reportButton);
 
