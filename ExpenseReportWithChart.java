@@ -56,13 +56,14 @@ class ExpenseTracker {
         ArrayList<String[]> records = new ArrayList<>();
 
         // 創建主框架
-        JFrame frame = new JFrame("記帳程式");
+        JFrame frame = new JFrame("Bookeeping Software");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 500);
+        frame.setSize(700, 500);
         frame.setLayout(new BorderLayout());
 
         // 上方輸入區域
         JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Create a new record"));
 
         // 日期輸入
         JLabel dateLabel = new JLabel("日期:");
