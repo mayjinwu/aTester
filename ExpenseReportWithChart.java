@@ -66,7 +66,7 @@ class ExpenseTracker {
         inputPanel.setBorder(BorderFactory.createTitledBorder("Create a new record"));
 
         // 日期輸入
-        JLabel dateLabel = new JLabel("日期:");
+        JLabel dateLabel = new JLabel("Date(format:yyyy-MM-dd):");
         JTextField dateField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         inputPanel.add(dateLabel);
         inputPanel.add(dateField);
@@ -78,7 +78,7 @@ class ExpenseTracker {
         inputPanel.add(timeField);
 
         // 分類選擇
-        JLabel categoryLabel = new JLabel("分類:");
+        JLabel categoryLabel = new JLabel("Category:");
         String[] categories = {"食物", "衣服", "娛樂"};
         JComboBox<String> categoryComboBox = new JComboBox<>(categories);
         inputPanel.add(categoryLabel);
@@ -97,7 +97,7 @@ class ExpenseTracker {
         inputPanel.add(reportButton);
 
         // 下方表格區域
-        String[] columnNames = {"日期", "時間", "分類", "金額"};
+        String[] columnNames = {"Date", "Time", "Category", "Expense"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(table);
@@ -139,6 +139,25 @@ class ExpenseTracker {
                 ExpenseReportWithChart.generateReport(frame, records);
             }
         });
+        // Time Filter Panel
+        JPanel filterPanel = new JPanel(new GridLayout(3, 3, 5, 5));
+        filterPanel.setBorder(BorderFactory.createTitledBorder("Filter by Time Range"));
+
+        JLabel startDateLabel = new JLabel("Start Date:");
+        JTextField startDateField = new JTextField(LocalDate.now().minusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        filterPanel.add(startDateLabel);
+        filterPanel.add(startDateField);
+
+        JLabel endDateLabel = new JLabel("End Date:");
+        JTextField endDateField = new JTextField(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        filterPanel.add(endDateLabel);
+        filterPanel.add(endDateField);
+
+        JButton filterButton = new JButton("Filter by Time");
+        filterPanel.add(filterButton);
+
+        frame.add(filterPanel, BorderLayout.SOUTH);
+
 
         frame.setVisible(true);
     }
