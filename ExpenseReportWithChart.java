@@ -75,7 +75,7 @@ class ExpenseTracker {
         inputPanel.setBorder(BorderFactory.createTitledBorder("Create a new record"));
 
         // Date Input
-        JLabel dateLabel = new JLabel("Date:");
+        JLabel dateLabel = new JLabel("Date(yyyy-MM-dd):");
         JTextField dateField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         inputPanel.add(dateLabel);
         inputPanel.add(dateField);
