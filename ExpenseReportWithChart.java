@@ -163,3 +163,52 @@ class ExpenseTracker {
         frame.setVisible(true);
     }
 }
+// Filter button action listener
+        filterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String startDate = startDateField.getText();
+                String endDate = endDateField.getText();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                try {
+                    LocalDate start = LocalDate.parse(startDate, formatter);
+                    LocalDate end = LocalDate.parse(endDate, formatter);
+
+                    HashMap<String, Double> filteredTotals = new HashMap<>();
+                    double totalFilteredExpense = 0;
+
+                    for (String[] record : records) {
+                        LocalDate recordDate = LocalDate.parse(record[0], formatter);
+                        if ((recordDate.isEqual(start) || recordDate.isAfter(start)) && (recordDate.isEqual(end) || recordDate.isBefore(end))) {
+                            String category = record[2];
+                            double amount = Double.parseDouble(record[3]);
+                            filteredTotals.put(category, filteredTotals.getOrDefault(category, 0.0) + amount);
+                            totalFilteredExpense += amount;
+                        }
+                    }
+
+                    JFrame filterReportFrame = new JFrame("Filtered Report");
+                    filterReportFrame.setSize(400, 300);
+                    filterReportFrame.setLayout(new BorderLayout());
+
+                    DefaultTableModel filterReportModel = new DefaultTableModel(new String[]{"Category", "Total Amount", "Percentage"}, 0);
+                    for (String category : filteredTotals.keySet()) {
+                        double total = filteredTotals.get(category);
+                        double percentage = (total / totalFilteredExpense) * 100;
+                        filterReportModel.addRow(new Object[]{category, String.format("%.2f", total), String.format("%.2f%%", percentage)});
+                    }
+                    JTable filterReportTable = new JTable(filterReportModel);
+                    JScrollPane filterReportScrollPane = new JScrollPane(filterReportTable);
+
+                    filterReportFrame.add(filterReportScrollPane, BorderLayout.CENTER);
+                    filterReportFrame.setVisible(true);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "請輸入有效的日期範圍！", "輸入錯誤", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        frame.setVisible(true);
+    }
+}
