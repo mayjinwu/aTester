@@ -12,11 +12,11 @@ import javax.swing.table.DefaultTableModel;
 public class ExpenseReportWithChart {
     public static void generateReport(JFrame parentFrame, ArrayList<String[]> records) {
         if (records.isEmpty()) {
-            JOptionPane.showMessageDialog(parentFrame, "尚無紀錄可生成報表！", "錯誤", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parentFrame, "No record to generate General Report！", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // 計算分類總金額和百分比
+        // Calculate the total amount and percentage of category
         HashMap<String, Double> categoryTotals = new HashMap<>();
         double totalExpense = 0;
 
@@ -53,20 +53,20 @@ public class ExpenseReportWithChart {
 
 class ExpenseTracker {
     public static void main(String[] args) {
-        // 紀錄清單
+        // The list of record
         ArrayList<String[]> records = new ArrayList<>();
 
-        // 創建主框架
-        JFrame frame = new JFrame("記帳程式");
+        // The main window
+        JFrame frame = new JFrame("Bookeeeping Program");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 500);
         frame.setLayout(new BorderLayout());
 
-        // 上方輸入區域
+        // The era of above section
         JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
         inputPanel.setBorder(BorderFactory.createTitledBorder("Create a new record"));
 
-        // 日期輸入
+        // Date Input
         JLabel dateLabel = new JLabel("日期:");
         JTextField dateField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         inputPanel.add(dateLabel);
@@ -79,26 +79,26 @@ class ExpenseTracker {
         inputPanel.add(timeField);
 
         // 分類選擇
-        JLabel categoryLabel = new JLabel("分類:");
-        String[] categories = {"食物", "衣服", "娛樂"};
+        JLabel categoryLabel = new JLabel("Category:");
+        String[] categories = {"Food", "Clothes", "Entertainment"};
         JComboBox<String> categoryComboBox = new JComboBox<>(categories);
         inputPanel.add(categoryLabel);
         inputPanel.add(categoryComboBox);
 
         // 金額輸入
-        JLabel amountLabel = new JLabel("金額:");
+        JLabel amountLabel = new JLabel("Amount:");
         JTextField amountField = new JTextField();
         inputPanel.add(amountLabel);
         inputPanel.add(amountField);
 
         // 按鈕區域
-        JButton addButton = new JButton("新增紀錄");
-        JButton reportButton = new JButton("生成報表");
+        JButton addButton = new JButton("Add new record");
+        JButton reportButton = new JButton("Generate Report");
         inputPanel.add(addButton);
         inputPanel.add(reportButton);
 
         // 下方表格區域
-        String[] columnNames = {"日期", "時間", "分類", "金額"};
+        String[] columnNames = {"Date", "Time", "Category", "Amount"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
         JScrollPane tableScrollPane = new JScrollPane(table);
@@ -135,7 +135,7 @@ class ExpenseTracker {
             }
         });
 
-        // 生成報表按鈕的事件處理
+        // Generate 按鈕的事件處理
         reportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -203,7 +203,7 @@ class ExpenseTracker {
                     filterReportFrame.add(filterReportScrollPane, BorderLayout.CENTER);
                     filterReportFrame.setVisible(true);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frame, "請輸入有效的日期範圍！", "輸入錯誤", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Please enter a valid record！", "Error input", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
