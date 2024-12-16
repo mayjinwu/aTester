@@ -72,26 +72,26 @@ class ExpenseTracker {
         inputPanel.add(dateLabel);
         inputPanel.add(dateField);
 
-        // 時間輸入
+        // Time Input
         JLabel timeLabel = new JLabel("時間:");
         JTextField timeField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         inputPanel.add(timeLabel);
         inputPanel.add(timeField);
 
-        // 分類選擇
+        // Category choice
         JLabel categoryLabel = new JLabel("Category:");
         String[] categories = {"Food", "Clothes", "Entertainment"};
         JComboBox<String> categoryComboBox = new JComboBox<>(categories);
         inputPanel.add(categoryLabel);
         inputPanel.add(categoryComboBox);
 
-        // 金額輸入
+        // Enter the Amount
         JLabel amountLabel = new JLabel("Amount:");
         JTextField amountField = new JTextField();
         inputPanel.add(amountLabel);
         inputPanel.add(amountField);
 
-        // 按鈕區域
+        // The area of the button
         JButton addButton = new JButton("Add new record");
         JButton reportButton = new JButton("Generate Report");
         inputPanel.add(addButton);
