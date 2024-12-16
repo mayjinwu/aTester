@@ -123,23 +123,6 @@ class ExpenseTracker {
                 String time = timeField.getText();
                 String category = (String) categoryComboBox.getSelectedItem();
                 String amount = amountField.getText();
-
-                // 驗證金額是否正確
-                try {
-                    double parsedAmount = Double.parseDouble(amount);
-                    String[] record = {date, time, category, String.format("%.2f", parsedAmount)};
-                    records.add(record);
-
-                    // Update the form
-                    tableModel.addRow(record);
-
-                    // 清空輸入框
-                    dateField.setText("");
-                    timeField.setText("");
-                    amountField.setText("");
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "請輸入有效的金額！", "輸入錯誤", JOptionPane.ERROR_MESSAGE);
-                }
             }
         });
 
