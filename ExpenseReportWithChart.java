@@ -174,36 +174,44 @@ class ExpenseTracker {
                     LocalDate start = LocalDate.parse(startDate, formatter);
                     LocalDate end = LocalDate.parse(endDate, formatter);
 
+                    // 重新過濾記錄
+                    DefaultTableModel filterReportModel = new DefaultTableModel(new String[]{"日期", "分類", "金額", "百分比"}, 0);
                     HashMap<String, Double> filteredTotals = new HashMap<>();
                     double totalFilteredExpense = 0;
 
                     for (String[] record : records) {
                         LocalDate recordDate = LocalDate.parse(record[0], formatter);
-                        if ((recordDate.isEqual(start) || recordDate.isAfter(start)) && (recordDate.isEqual(end) || recordDate.isBefore(end))) {
+                        if ((recordDate.isEqual(start) || recordDate.isAfter(start)) &&
+                                (recordDate.isEqual(end) || recordDate.isBefore(end))) {
+
                             String category = record[2];
                             double amount = Double.parseDouble(record[3]);
                             filteredTotals.put(category, filteredTotals.getOrDefault(category, 0.0) + amount);
                             totalFilteredExpense += amount;
+
+                            // 新增篩選記錄到表格
+                            filterReportModel.addRow(new Object[]{record[0], category, String.format("%.2f", amount), ""});
                         }
                     }
 
-                    JFrame filterReportFrame = new JFrame("Filtered Report");
-                    filterReportFrame.setSize(400, 300);
-                    filterReportFrame.setLayout(new BorderLayout());
-
-                    DefaultTableModel filterReportModel = new DefaultTableModel(new String[]{"Category", "Total Amount", "Percentage"}, 0);
-                    for (String category : filteredTotals.keySet()) {
+                    // 計算百分比並更新表格
+                    for (int i = 0; i < filterReportModel.getRowCount(); i++) {
+                        String category = (String) filterReportModel.getValueAt(i, 1);
                         double total = filteredTotals.get(category);
                         double percentage = (total / totalFilteredExpense) * 100;
-                        filterReportModel.addRow(new Object[]{category, String.format("%.2f", total), String.format("%.2f%%", percentage)});
+                        filterReportModel.setValueAt(String.format("%.2f%%", percentage), i, 3);
                     }
+
                     JTable filterReportTable = new JTable(filterReportModel);
                     JScrollPane filterReportScrollPane = new JScrollPane(filterReportTable);
 
+                    JFrame filterReportFrame = new JFrame("Filtered Report");
+                    filterReportFrame.setSize(500, 400);
                     filterReportFrame.add(filterReportScrollPane, BorderLayout.CENTER);
                     filterReportFrame.setVisible(true);
+
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frame, "Please enter a valid record！", "Error input", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "請輸入有效的日期範圍！", "輸入錯誤", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
