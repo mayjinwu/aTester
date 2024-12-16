@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class ExpenseReportWithChart {
     public static void generateReport(JFrame parentFrame, ArrayList<String[]> records) {
         if (records.isEmpty()) {
-            JOptionPane.showMessageDialog(parentFrame, "尚無紀錄可生成報表！", "錯誤", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parentFrame, "尚無紀錄可生成報表！", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -73,7 +73,7 @@ class ExpenseTracker {
         inputPanel.add(dateField);
 
         // 時間輸入
-        JLabel timeLabel = new JLabel("時間:");
+        JLabel timeLabel = new JLabel("Time:");
         JTextField timeField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         inputPanel.add(timeLabel);
         inputPanel.add(timeField);
@@ -129,7 +129,7 @@ class ExpenseTracker {
                     timeField.setText("");
                     amountField.setText("");
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(frame, "請輸入有效的金額！", "輸入錯誤", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "請輸入有效的金額！", "Error Input", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
