@@ -29,12 +29,12 @@ public class ExpenseReportWithChart {
         }
 
         // 建立報表框架
-        JFrame reportFrame = new JFrame("財務報表");
+        JFrame reportFrame = new JFrame("Generate Report");
         reportFrame.setSize(400, 300);
         reportFrame.setLayout(new BorderLayout());
 
-        // 建立報表內容
-        DefaultTableModel reportTableModel = new DefaultTableModel(new String[]{"分類", "總金額", "百分比"}, 0);
+        // Create the generate report contents
+        DefaultTableModel reportTableModel = new DefaultTableModel(new String[]{"Category", "Total Amount", "Percentage"}, 0);
         for (String category : categoryTotals.keySet()) {
             double total = categoryTotals.get(category);
             double percentage = (total / totalExpense) * 100;
@@ -67,13 +67,13 @@ class ExpenseTracker {
         inputPanel.setBorder(BorderFactory.createTitledBorder("Create a new record"));
 
         // Date Input
-        JLabel dateLabel = new JLabel("日期:");
+        JLabel dateLabel = new JLabel("Date:");
         JTextField dateField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         inputPanel.add(dateLabel);
         inputPanel.add(dateField);
 
         // Time Input
-        JLabel timeLabel = new JLabel("時間:");
+        JLabel timeLabel = new JLabel("Time:");
         JTextField timeField = new JTextField(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         inputPanel.add(timeLabel);
         inputPanel.add(timeField);
@@ -97,7 +97,7 @@ class ExpenseTracker {
         inputPanel.add(addButton);
         inputPanel.add(reportButton);
 
-        // 下方表格區域
+        //The area of the below form
         String[] columnNames = {"Date", "Time", "Category", "Amount"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         JTable table = new JTable(tableModel);
@@ -107,7 +107,7 @@ class ExpenseTracker {
         frame.add(inputPanel, BorderLayout.NORTH);
         frame.add(tableScrollPane, BorderLayout.CENTER);
 
-        // 新增紀錄按鈕的事件處理
+        // Add a button to add new record
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -122,7 +122,7 @@ class ExpenseTracker {
                     String[] record = {date, time, category, String.format("%.2f", parsedAmount)};
                     records.add(record);
 
-                    // 更新表格
+                    // Update the form
                     tableModel.addRow(record);
 
                     // 清空輸入框
@@ -194,7 +194,7 @@ class ExpenseTracker {
                         }
                     }
 
-                    // 計算百分比並更新表格
+                    // Caiculate the percentage and update forms
                     for (int i = 0; i < filterReportModel.getRowCount(); i++) {
                         String category = (String) filterReportModel.getValueAt(i, 1);
                         double total = filteredTotals.get(category);
@@ -211,7 +211,7 @@ class ExpenseTracker {
                     filterReportFrame.setVisible(true);
 
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(frame, "請輸入有效的日期範圍！", "輸入錯誤", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Please enter a valid date！", "Error Input", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
