@@ -12,11 +12,11 @@ import javax.swing.table.DefaultTableModel;
 public class ExpenseReportWithChart {
     public static void generateReport(JFrame parentFrame, ArrayList<String[]> records) {
         if (records.isEmpty()) {
-            JOptionPane.showMessageDialog(parentFrame, "No record to generate General Report！", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(parentFrame, "No records to generate General Report!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Calculate the total amount and percentage of category
+        // 計算分類總金額和整體總金額
         HashMap<String, Double> categoryTotals = new HashMap<>();
         double totalExpense = 0;
 
@@ -29,17 +29,25 @@ public class ExpenseReportWithChart {
         }
 
         // 建立報表框架
-        JFrame reportFrame = new JFrame("Generate Report");
-        reportFrame.setSize(400, 300);
+        JFrame reportFrame = new JFrame("General Report with Time");
+        reportFrame.setSize(700, 400);
         reportFrame.setLayout(new BorderLayout());
 
-        // Create the generate report contents
-        DefaultTableModel reportTableModel = new DefaultTableModel(new String[]{"Category", "Total Amount", "Percentage"}, 0);
-        for (String category : categoryTotals.keySet()) {
-            double total = categoryTotals.get(category);
-            double percentage = (total / totalExpense) * 100;
-            reportTableModel.addRow(new Object[]{category, String.format("%.2f", total), String.format("%.2f%%", percentage)});
+        // 建立報表內容，新增日期和時間列
+        DefaultTableModel reportTableModel = new DefaultTableModel(new String[]{"日期", "時間", "分類", "金額", "百分比"}, 0);
+
+        for (String[] record : records) {
+            String date = record[0];
+            String time = record[1];
+            String category = record[2];
+            double amount = Double.parseDouble(record[3]);
+            double percentage = (categoryTotals.get(category) / totalExpense) * 100;
+
+            // 加入每條記錄到表格中
+            reportTableModel.addRow(new Object[]{date, time, category, String.format("%.2f", amount), String.format("%.2f%%", percentage)});
         }
+
+        // 創建表格並包裹到 JScrollPane 中
         JTable reportTable = new JTable(reportTableModel);
         JScrollPane reportScrollPane = new JScrollPane(reportTable);
 
